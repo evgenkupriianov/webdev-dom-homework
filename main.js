@@ -31,15 +31,6 @@ fetchAdnRenderComments()
   loaderListElement.classList.add('hide-elem');
 });
 
-// Функция для окрашивания лайка в зависимости от значения activeLike
-const activeLike = (comment) => {
-    if (comment.isLiked === true) {
-      return '-active-like'
-    } 
-}
-
-
-
 // Enter в поле комментария означает клик на кнопку "Написать"
 commentInputElement.addEventListener("keyup", () => {
 if (event.keyCode === 13) {
