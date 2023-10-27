@@ -1,8 +1,8 @@
-import { dateString } from "date.js"; 
-import { likeListener } from "likes.js";
-import { activeLike } from "likes.js";
-import { answerComment } from "answers.js";
-import { editComment } from "edit.js";
+import { dateString } from "./date.js"; 
+import { likeListener } from "./likes.js";
+import { activeLike } from "./likes.js";
+import { answerComment } from "./answers.js";
+import { editComment } from "./edit.js";
 
 export function renderList({commentsArray, commentsElement}) {
       const commentsHtml = commentsArray.map((comment, index) => {

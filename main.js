@@ -1,6 +1,6 @@
-import {getComments} from "api.js";
-import {postComments} from "api.js";
-import {renderList} from "render.js";
+import {getComments} from "./api.js";
+import {postComments} from "./api.js";
+import {renderList} from "./render.js";
 // Создаём переменные обращаясь к классу
 const commentsElement = document.querySelector('.comments');
 const nameInputElement = document.querySelector('.add-form-name');
