@@ -1,4 +1,4 @@
-import {renderList} from "./render.js";
+import {renderList} from "render.js";
 
 export function likeListener ({commentsArray, commentsElement}) {
     const likeElements = document.querySelectorAll('.like-button');
