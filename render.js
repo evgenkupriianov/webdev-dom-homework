@@ -32,5 +32,5 @@ export function renderList({commentsArray, commentsElement}) {
       commentsElement.innerHTML = commentsHtml; 
       likeListener({commentsArray, commentsElement});
       answerComment();
-      likeListener({commentsArray, commentsElement});
+      editComment({commentsArray, commentsElement});
     };

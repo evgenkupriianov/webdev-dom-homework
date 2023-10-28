@@ -1,6 +1,7 @@
 import {getComments} from "./api.js";
 import {postComments} from "./api.js";
 import {renderList} from "./render.js";
+
 // Создаём переменные обращаясь к классу
 const commentsElement = document.querySelector('.comments');
 const nameInputElement = document.querySelector('.add-form-name');
@@ -18,10 +19,9 @@ const fetchAdnRenderComments = () => {
   return getComments()
   .then((response) => {
     commentsArray = response.comments
-    renderList();
+    renderList({commentsArray, commentsElement});
   })
   .catch((error) => {
-    alert('Нет соединения с интернетом');
     console.log(error);
   })
 };
@@ -53,15 +53,15 @@ const buttonListener = buttonInputElement.addEventListener("click", () => {
   loaderFormElement.classList.remove('hide-elem');
 
   // Отправили новый объект на сервер
-  postComments(commentInputElement.value, nameInputElement.value)
+    postComments(commentInputElement.value, nameInputElement.value)
     .then((response) => {
       // Проверили статус 
       switch (response.status) {
         case 400:
-          throw new Error("Имя должено содержать хотя бы 3 символа")
+          throw new Error("Имя и комментарий должен содержать хотя бы 3 символа")
           break;
         case 500:
-          throw new Error("Ошибка на сервере")
+          throw new Error("Сервер сломался, попробуй позже")
           break;
         default:
           return fetchAdnRenderComments();
@@ -90,5 +90,4 @@ document.querySelector('.delete-comment-button').addEventListener("click", () =>
   lastList.remove();
 });
 
-renderList();
 console.log("It works!");

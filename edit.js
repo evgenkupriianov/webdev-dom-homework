@@ -1,6 +1,8 @@
 import {renderList} from "./render.js";
+
 // Функция кнопки "Редактировать"
 export function editComment ({commentsArray, commentsElement}) {
+
     // Находим кнопки "Редактировать", "Сохранить", существующие комменты и поля для ввода новых.
     const editElements = document.querySelectorAll(".edit-button");
     const saveEditElements = document.querySelectorAll(".save-edit-button");
