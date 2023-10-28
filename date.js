@@ -1,7 +1,7 @@
 export function dateString (string) {
     let date = new Date(string);
     let dateDay = (date) => {
-      if (date.getDate().toString().length === 1) {
+      if (date.getDate().toString()< 9) {
         return "0" + date.getDate();
       } else {
         return date.getDate();

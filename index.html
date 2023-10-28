@@ -13,11 +13,13 @@
       <!-- Рендер в JS-->
       </ul>
       <p class="loader_form hide-elem">Комментарий добавляется...</p>
-      <div class="add-form">
+      <div class="move_to_autorization_box">Чтобы добавить комментарий,<button class="button_to_autorization">авторизуйтесь</button></div>
+      <div class="add-form hide-elem">
         <input
           type="text"
           class="add-form-name"
           placeholder="Введите ваше имя"
+          disabled
         />
         <textarea
           type="textarea"
@@ -29,7 +31,9 @@
           <button class="add-form-button">Написать</button>
         </div>
       </div>
-      <button class="delete-comment-button">Удалить последний комментарий</button>
+      <form action="#" class="login_form_box">
+      </form>
+      <button class="delete-comment-button hide-elem">Удалить последний комментарий</button>
     </div>
   </body>
   <script type="module" src="main.js"></script>

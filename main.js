@@ -1,6 +1,15 @@
-import {getComments} from "./api.js";
-import {postComments} from "./api.js";
-import {renderList} from "./render.js";
+import {getComments} from "./api.js"; // Получает комментарии от API
+import {postComments} from "./api.js"; // Публикует новый комментарий через API
+import {renderList} from "./render.js"; // Рисует полученные комментарии
+import {buttonToAutorizationListener} from "./render.js"; // Ждёт нажатия на кнопку "авторизуйтесь"
+import { alreadyLoggedIn } from "./login.js"; // Проверяет была ли пройдена авторизация 
+
+// localStorage.clear();
+// Проверяем была ли пройдена авторизация 
+alreadyLoggedIn(); 
+
+//Ждём нажатия на кнопку "авторизуйтесь"
+buttonToAutorizationListener();
 
 // Создаём переменные обращаясь к классу
 const commentsElement = document.querySelector('.comments');
@@ -11,11 +20,12 @@ const formInputElement = document.querySelector('.add-form');
 const loaderListElement = document.querySelector('.loader_list');
 const loaderFormElement = document.querySelector('.loader_form');
 
+
 // Массив с комментариями
 export let commentsArray = [];
 
 // Запрос в API и рендер
-const fetchAdnRenderComments = () => {
+export const fetchAdnRenderComments = () => {
   return getComments()
   .then((response) => {
     commentsArray = response.comments
@@ -67,13 +77,12 @@ const buttonListener = buttonInputElement.addEventListener("click", () => {
           return fetchAdnRenderComments();
       }
     })
-    // Вернули форму
     .then(() => {
+      // Вернули форму
       formInputElement.classList.remove('hide-elem');
       loaderFormElement.classList.add('hide-elem');
 
       // Очищаем форму от последнего комментария
-      nameInputElement.value = '';
       commentInputElement.value = '';
     })
     .catch((error) => {
@@ -82,12 +91,6 @@ const buttonListener = buttonInputElement.addEventListener("click", () => {
       alert(error);
       console.log(error);
     });
-});
-
-// Функция кнопки "Удалить последний комментарий"
-document.querySelector('.delete-comment-button').addEventListener("click", () => {
-  let lastList = document.querySelector('li:last-child');
-  lastList.remove();
 });
 
 console.log("It works!");

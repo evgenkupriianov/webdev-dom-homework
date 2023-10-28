@@ -1,6 +1,13 @@
+import { token } from "./login.js"; 
+
+const host = "https://wedev-api.sky.pro/api/v2/kupriianov/comments";
+
 export function getComments() {
-    return fetch("https://wedev-api.sky.pro/api/v1/kupriianov/comments", {
-    method: "GET"
+    return fetch(host, {
+    method: "GET", 
+    headers: {
+      Authorization: `Bearer ${token}`
+    },
   })
   .then((response) => {
     if (response.status === 500) {
@@ -13,12 +20,15 @@ export function getComments() {
 };
 
 export function postComments(text, name) {
-    return fetch("https://wedev-api.sky.pro/api/v1/kupriianov/comments", {
+    return fetch(host, {
         method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
         body: JSON.stringify({
             text: text,
             name: name,
             // forceError: true,
         })
     })
-};
+}
