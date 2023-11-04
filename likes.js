@@ -16,7 +16,7 @@ export function likeListener ({commentsArray, commentsElement}) {
           let id = commentsArray[like.dataset.index].id;
 
           // Отправляем авторизованный запрос на сервер 
-          fetch(`https://wedev-api.sky.pro/api/v2/:vladimir-rychkov/comments/${id}/toggle-like`, {
+          fetch(`https://wedev-api.sky.pro/api/v2/:kupriianov/comments/${id}/toggle-like`, {
             method: "POST",
             headers: {
               Authorization: `Bearer ${token}`

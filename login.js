@@ -76,8 +76,8 @@ export function registration () {
             .then((response) => {
                 // Получили ответ и перевели с json
                 if (response.status === 400) {
-                  alert ('Пользователь с таким логином уже сущетсвует');
-                  throw new Error("Пользователь с таким логином уже сущетсвует")
+                  alert ('Не верный логин');
+                  throw new Error("Не вырный логин")
                 } else {
                   return response.json();
                 }
