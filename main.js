@@ -1,96 +1,16 @@
-import {getComments} from "./api.js"; // Получает комментарии от API
-import {postComments} from "./api.js"; // Публикует новый комментарий через API
-import {renderList} from "./render.js"; // Рисует полученные комментарии
-import {buttonToAutorizationListener} from "./render.js"; // Ждёт нажатия на кнопку "авторизуйтесь"
-import { alreadyLoggedIn } from "./login.js"; // Проверяет была ли пройдена авторизация 
+import { getData } from './utilities.js';
+import { renderLogin } from './renderLogin.js';
 
-// localStorage.clear();
-// Проверяем была ли пройдена авторизация 
-alreadyLoggedIn(); 
-
-//Ждём нажатия на кнопку "авторизуйтесь"
-buttonToAutorizationListener();
-
-// Создаём переменные обращаясь к классу
-const commentsElement = document.querySelector('.comments');
-const nameInputElement = document.querySelector('.add-form-name');
-const commentInputElement = document.querySelector('.add-form-text');
-const buttonInputElement = document.querySelector('.add-form-button');
-const formInputElement = document.querySelector('.add-form');
-const loaderListElement = document.querySelector('.loader_list');
-const loaderFormElement = document.querySelector('.loader_form');
+let comments = document.querySelector('.comments');
 
 
-// Массив с комментариями
-export let commentsArray = [];
-
-// Запрос в API и рендер
-export const fetchAdnRenderComments = () => {
-  return getComments()
-  .then((response) => {
-    commentsArray = response.comments
-    renderList({commentsArray, commentsElement});
-  })
-  .catch((error) => {
-    console.log(error);
-  })
-};
-
-fetchAdnRenderComments()
-.then(() => {
-  loaderListElement.classList.add('hide-elem');
+window.addEventListener('load', () => {
+    let loaderText = document.createElement('p');
+    loaderText.className = 'startLoader';
+    loaderText.textContent = 'Пожалуйста подождите, загружаю комментарии...';
+    comments.before(loaderText);
+    getData()
+        .then(() => {
+            loaderText.remove();
+        });
 });
-
-// Enter в поле комментария означает клик на кнопку "Написать"
-commentInputElement.addEventListener("keyup", () => {
-if (event.keyCode === 13) {
-    buttonInputElement.click();
-}
-});
-
-// Функция кнопки "Написать"
-const buttonListener = buttonInputElement.addEventListener("click", () => {
-
-  // Проверка на пустые значения
-  formInputElement.classList.remove("add-form-error");
-  if (nameInputElement.value.trim() === '' || commentInputElement.value.trim() === '') {
-    formInputElement.classList.add("add-form-error");
-    return;
-  };  
-
-  // Убрали форму
-  formInputElement.classList.add('hide-elem');
-  loaderFormElement.classList.remove('hide-elem');
-
-  // Отправили новый объект на сервер
-    postComments(commentInputElement.value, nameInputElement.value)
-    .then((response) => {
-      // Проверили статус 
-      switch (response.status) {
-        case 400:
-          throw new Error("Имя и комментарий должен содержать хотя бы 3 символа")
-          break;
-        case 500:
-          throw new Error("Сервер сломался, попробуй позже")
-          break;
-        default:
-          return fetchAdnRenderComments();
-      }
-    })
-    .then(() => {
-      // Вернули форму
-      formInputElement.classList.remove('hide-elem');
-      loaderFormElement.classList.add('hide-elem');
-
-      // Очищаем форму от последнего комментария
-      commentInputElement.value = '';
-    })
-    .catch((error) => {
-      formInputElement.classList.remove('hide-elem');
-      loaderFormElement.classList.add('hide-elem');
-      alert(error);
-      console.log(error);
-    });
-});
-
-console.log("It works!");
