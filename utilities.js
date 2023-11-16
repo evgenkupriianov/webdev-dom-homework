@@ -9,14 +9,14 @@ const delay = (interval = 300) => {
         }, interval);
     });
 };
-const changeDataToLocal = (date) => new Date(date).toLocaleString("ru", { year: '2-digit', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' }).replace(',', '');
+//const changeDataToLocal = (date) => new Date(date).toLocaleString("ru", { year: '2-digit', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' }).replace(',', '');
 const getData = () => {
     return getComments()
         .then((responseData) => {
             changeCommentsArr(responseData.comments.map((comment) => {
                 return {
                     id: comment.id,
-                    created: changeDataToLocal(comment.date),
+                    created: comment.date,
                     countLikes: comment.likes,
                     likeSet: comment.isLiked,
                     editComment: false,
@@ -74,4 +74,4 @@ const addComment = () => {
         postData();
     }
 };
-export { delay, getData, addComment, changeDataToLocal };
+export { delay, getData, addComment,};

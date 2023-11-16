@@ -2,6 +2,11 @@ import { likeButtonsListener, commentsListener, quoteListener, editButtonsListen
 import { addComment } from './utilities.js'
 import { commentsArr, token, login, userName } from './globalVariables.js';
 import { renderLogin } from './renderLogin.js';
+import { formatDateToRu, formatDateToUs } from "./lib/formatDate/formatDate.js"
+import { format } from "date-fns";
+
+//const country = 'ru'
+
 const renderComments = () => {
   let conteinerHtml = document.querySelector('.container');
   conteinerHtml.innerHTML = `<ul class="comments">
@@ -31,7 +36,7 @@ const renderComments = () => {
   comments.innerHTML = comments.innerHTML + commentsArr.map((el, indx) => `<li class="comment">
           <div class="comment-header">
             <div>${el.name}</div>
-            <div>${el.created}</div>
+            <div> ${format(new Date(el.created),'yyyy-MM-dd hh.mm.ss')} </div>
           </div>
           <div class="comment-body">
             <div class="comment-text ${el.editComment ? 'display_none' : ''}" data-text="${el.comment}" data-name="${el.name}">
